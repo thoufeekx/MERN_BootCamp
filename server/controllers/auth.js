@@ -130,7 +130,9 @@ export const login = async (req, res) => {
         //send as json response
 
         res.json({token, user})
-        
+
+        //returning the jwt token
+
         //client side token and user is visible
         // display logged in user informations
 
