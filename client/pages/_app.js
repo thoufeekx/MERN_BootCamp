@@ -1,4 +1,9 @@
+import {UserProvider} from '../context'
+
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 
 import Nav from '../components/Nav';
 
@@ -14,8 +19,9 @@ import 'antd/dist/antd.css'
 function MyApp ({ Component, pageProps})
     {
         return (
-          <>
+          
 
+            <UserProvider>
             <Head>
                 <link rel='stylesheet' href='/css/style.css'/>
             </Head>
@@ -36,7 +42,11 @@ function MyApp ({ Component, pageProps})
                 , used when multiple components are rendered 
                 jsx structure
                 */}
-          </>
+
+            </UserProvider>
+
+
+          
         );
     }
 

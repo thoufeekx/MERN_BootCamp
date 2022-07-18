@@ -1,5 +1,7 @@
-import {UserContext} from '../context'
+import {UserContext} from '../../context'
 import { useContext } from 'react';
+
+import UserRoute from '../../components/routes/userroute';
 
 //pass UserContext to useContext
 
@@ -11,18 +13,21 @@ const home = () => {
 
 
     return (
+
+        <UserRoute>
         <div className="container">
             <div className="row">
                     <h1 className="display-1 text-center py-5">
-                        Home Page
+                        Dash board
                     </h1>
 
-                    {JSON.stringify(state)}
+                    
 
-                    <img src='/images/default.jpg' alt='image' />
+                    
             </div>
 
         </div>
+        </UserRoute>
     )
 }
 

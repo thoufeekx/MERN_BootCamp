@@ -5,7 +5,9 @@ const router = express.Router();
 
 
 //import controllers
-import {register, login} from '../controllers/auth'
+import {register, login, currentUser} from '../controllers/auth'
+
+import {requireSignin} from '../middlewares'
 
 
 
@@ -21,5 +23,11 @@ router.post('/register', register)
 router.post('/login', login)
 //log in might contain the camparing hashed passwords 
 // and log in credentials
+
+
+router.get('/current-user',requireSignin, currentUser)
+//verify token first only then access is provided
+//requiresignin function verify the validity of token
+
 
 module.exports = router

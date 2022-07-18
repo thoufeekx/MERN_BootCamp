@@ -26,6 +26,9 @@ import jwt from 'jsonwebtoken'
 
 
 
+
+
+
 export const register = async (req,res) => {
     //console.log('Register endpoint =>', req.body)
     //to make this work make express.json is applied in the above middleware
@@ -74,6 +77,15 @@ export const register = async (req,res) => {
 
     }
 } 
+
+
+
+
+
+
+
+
+
 
 // login credential verification and other stuff
 
@@ -147,5 +159,34 @@ export const login = async (req, res) => {
         return res.status(400).send(`Error. Try again.`)
     }
 
+
+}
+
+
+
+
+export const currentUser = async (req, res) => {
+
+
+    //console.log(req.user)
+    try 
+    {
+        const user = await User.findById(req.user._id)
+        //find the user with above code
+        //res.json(user)
+        res.json({ok: true})
+    } 
+
+    catch (error) 
+    {
+        console.log(error);
+        res.sendStatus(400)
+    }
+
+    //send token in headers using POSTMAN (later will send from client)
+    //verify token using expressJwt (create a middleware)
+    //if verified you will get user id from that token ( used during login to create signed token)
+    //based on that user id, find that user from db
+    //if found send succesfull response 
 
 }

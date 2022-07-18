@@ -1,20 +1,47 @@
-import { useState } from "react";
+
+
+// useState is the react hook which help in monitor the state or data dynamically in the client side
+import { useState, useContext, useEffect} from "react";
+
+// axios is the npm package used for get, post and push etc
 import axios from "axios";
+
+// to consolelog error as toast
 import { toast } from "react-toastify";
-//import {Modal} from 'antd'
+
+
+// link tag to move from page to page
 import Link from 'next/link'
-//import {SyncOutlined} from '@ant-design/icons'
+
+// Input form containing email and password
 import Form from '../components/forms/authform'
+
+// To route to homepage when the user credentials are verified
 import {useRouter} from 'next/router'
+
+// import context when u need context
+import { UserContext } from "../context";
+
+
+
 
 const Login = () => {
   //state hooks
   
   const [email, setEmail] = useState("toxci@gmail");
   const [password, setPassword] = useState("dhoigh");
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
+
+  const [state, setState] = useContext(UserContext)
+
+
+  // used to route to different pages upon action
   const router = useRouter()
+
+ 
+
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,12 +57,37 @@ const Login = () => {
         password,
       });
 
+      setState({
+        //update context
+        user: data.user,
+        token: data.token
+
+
+        //next step, we need to save this in local storage
+
+      });
+
+     
+
+
+      //saving jwt to localstorage
+
+      window.localStorage.setItem('auth', JSON.stringify(data))
+      //window  object
+      // contain localstorage
+      // gives function setItem()
+      // arguments 1. => Key , 2 => value
+      // save in local storage only using json format 
+      // we have javascript object "data" we need to convert to json format
+
 
       //console.log(data); // logs token and other credentials
-      //router.push('/')
+
+      //pushing the user to homepage or something
+      router.push('/')
 
 
-      //emptying once the data is entered  for UI smoothing
+      //emptying once the data is entered, done for UI smoothing
 
     //   setEmail('')
     //   setPassword('')
@@ -51,6 +103,9 @@ const Login = () => {
       setLoading(false)
     }
   };
+
+
+  if(state && state.token ) router.push('/')
 
   return (
     <div className="container-fluid">
