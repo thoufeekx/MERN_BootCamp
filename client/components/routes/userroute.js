@@ -28,11 +28,15 @@ const UserRoute = ({children}) => {
     const getCurrentUser = async () => {
 
         try 
-        {
-            const {data} = await axios.get(`${process.env.NEXT_PUBLIC_API}/current-user`, {
-                headers: {
-                    'Authorization' :    `Bearer ${state.token}`             }
+        {                          // `${process.env.NEXT_PUBLIC_API}/current-user` this goes down below , changed coz for axios interceptors
+            const {data} = await axios.get(`/current-user`, {
+                // headers: {
+                //     'Authorization' :    `Bearer ${state.token}`          
+                
+                
+                //          }
             })
+            
             if(data.ok) setOk(true)
         } 
         

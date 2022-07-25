@@ -39,16 +39,19 @@ export const register = async (req,res) => {
     const {name, email, password, secret} = req.body;
 
     //validation
-    if(!name) return res.status(400).send('Name is required')
-    if(!password  || password.length < 6) return res.status(400).send('Password is short or password is not entered')
-    if(!secret) return res.status(400).send('Answer is required')
+    if(!name) {
+        return res.json({ error: 'Name is required'})
+    }
+        
+
+    if(!password  || password.length < 6) return res.json({error:'password is required and must be in 6 chara long'})
+    if(!secret) return res.json({error : 'Answer is required'})
 
     
     const exist = await User.findOne({email })
 
 
-    if(exist) return res.status(400).send('Email is taken')
-
+    if(exist) return res.json({error: 'email is taken'})
 
     //we want to hash the password so import hash function from helpers/auth
     const hashedPassword = await hashPassword(password)
@@ -107,7 +110,7 @@ export const login = async (req, res) => {
         //finding user with user model User = user Model
         const user = await User.findOne({email});
 
-        if(!user) return res.status(400).send('No user found ')
+        if(!user) return res.json({error: 'No user found '})
         // send err msg if no user is found with the name
 
 
@@ -115,7 +118,7 @@ export const login = async (req, res) => {
         const match = await comparePassword(password, user.password)
         //user.password is password saved in database
 
-        if(!match) return res.status(400).send('Wrong password, Try again')
+        if(!match) return res.json({error: 'Wrong password, Try again'})
         // if the password doesnt match err is send to front
         // error is found in network response mostly
 
@@ -188,5 +191,62 @@ export const currentUser = async (req, res) => {
     //if verified you will get user id from that token ( used during login to create signed token)
     //based on that user id, find that user from db
     //if found send succesfull response 
+
+}
+
+
+
+
+
+export const forgotPassword = async (req,res) => 
+{
+        //console.log(req.body);
+        //step 1 validation
+
+       
+       const {email, newPassword, secret} = req.body
+
+       //send error message for password
+       if(!newPassword || newPassword < 6) {
+        return res.json({
+            error: 'New password is required and should be minimum 6 characters long'
+        })
+       }
+
+        //send error message for secret
+       if(!secret || secret) {
+        return res.json({
+            error: 'Secret is required'
+        })
+       }
+
+        const user = await User.findOne({email, secret})
+        if(!user) res.json({error: 'Cannot find user'})
+
+        //updating the password
+
+        try 
+        {
+                //TODO
+                // delete old password
+                //hash new password
+                //save the hashed password in data base
+
+                const hashed = await hashPassword(newPassword)
+                await User.findByIdAndUpdate(user._id, {password: hashed})
+                // hashed is the new hashed password
+
+                return res.json({
+                    success: 'Congrants, Now you can log in with new password'
+                })
+            
+        } catch (error) {
+            console.log(error);
+            return res.json({
+                error: 'something wrong. Try again'
+            })
+            
+        }
+
 
 }

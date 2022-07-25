@@ -2,14 +2,13 @@ import {SyncOutlined} from '@ant-design/icons'
 
 
 
- const authform = ({
+ const forgotpasswordform = ({
     handleSubmit,
-    name,
-    setName,
+   
     email,
     setEmail,
-    password,
-    setPassword,
+    newpassword,
+    setNewPassword,
     secret,
     setSecret,
     loading,
@@ -20,7 +19,7 @@ import {SyncOutlined} from '@ant-design/icons'
 
     return(
         <form onSubmit={handleSubmit}>
-           { page !== 'login' && (
+           {/* { page !== 'login' && (
             <div className="form-group p-2">
               <small>
                 <label className="text-muted">Your name</label>
@@ -33,7 +32,7 @@ import {SyncOutlined} from '@ant-design/icons'
                 placeholder="Enter name"
               />
             </div>
-            )}
+            )} */}
               
             <div className="form-group p-2">
               <small>
@@ -53,17 +52,16 @@ import {SyncOutlined} from '@ant-design/icons'
                 <label className="text-muted">Password</label>
               </small>
               <input
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={newpassword}
+                onChange={(e) => setNewPassword(e.target.value)}
                 type="password"
                 className="form-control"
-                placeholder="Enter Password"
+                placeholder="Enter new Password"
               />
             </div>
 
            
-          {
-            page !== 'login' && (
+         
              <>
            <div className="form-group p-2">
            <small>
@@ -89,15 +87,13 @@ import {SyncOutlined} from '@ant-design/icons'
              placeholder="Write your answer here"
            />
          </div>
-         </>)
-          }
+         </>
 
            
 
             <div className="form-group p-2">
-                  <button disabled={ page ==='login' 
-                      ? !email || !password || loading
-                      : !name || !email || !password || !secret}className="btn btn-primary col-12">
+                  <button disabled={ !email || !newpassword || !secret || loading}   // include loading
+                          className="btn btn-primary col-12">
                        {loading ? <SyncOutlined spin className="py-1"/> : "Submit" }
                   </button>
             </div>
@@ -105,4 +101,4 @@ import {SyncOutlined} from '@ant-design/icons'
     )
 }
 
-export default authform
+export default forgotpasswordform

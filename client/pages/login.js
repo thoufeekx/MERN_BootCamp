@@ -50,57 +50,65 @@ const Login = () => {
 
       setLoading(true)
       // console.log(name, email, password, secret);
+      //${process.env.NEXT_PUBLIC_API}/login changed coz for axios interceptors
       const { data } = await axios.post(
-        `${process.env.NEXT_PUBLIC_API}/login`, 
+        `/login`, 
         {
         email,
         password,
       });
 
-      setState({
-        //update context
-        user: data.user,
-        token: data.token
+      if(data.error) {
+        toast.error(data.error)
+        setLoading(false)
+      }
+      else {
+        setState({
+          //update context
+          user: data.user,
+          token: data.token
+  
+  
+          //next step, we need to save this in local storage
+  
+        });
+  
+       
+  
+  
+        //saving jwt to localstorage
+  
+        window.localStorage.setItem('auth', JSON.stringify(data))
+        //window  object
+        // contain localstorage
+        // gives function setItem()
+        // arguments 1. => Key , 2 => value
+        // save in local storage only using json format 
+        // we have javascript object "data" we need to convert to json format
+  
+  
+        //console.log(data); // logs token and other credentials
+  
+        //pushing the user to homepage or something
+        router.push('/')
+  
+  
+        //emptying once the data is entered, done for UI smoothing
+  
+      //   setEmail('')
+      //   setPassword('')
+      //   setLoading(false)
 
-
-        //next step, we need to save this in local storage
-
-      });
-
-     
-
-
-      //saving jwt to localstorage
-
-      window.localStorage.setItem('auth', JSON.stringify(data))
-      //window  object
-      // contain localstorage
-      // gives function setItem()
-      // arguments 1. => Key , 2 => value
-      // save in local storage only using json format 
-      // we have javascript object "data" we need to convert to json format
-
-
-      //console.log(data); // logs token and other credentials
-
-      //pushing the user to homepage or something
-      router.push('/')
-
-
-      //emptying once the data is entered, done for UI smoothing
-
-    //   setEmail('')
-    //   setPassword('')
-    //   setLoading(false)
+      }
+      
 
 
     } 
     
     catch (err) 
     {
-      console.log(err.response.data)
-      toast.error(err.response.data);
-      setLoading(false)
+      console.log(err);
+      setLoading(false);
     }
   };
 
@@ -152,6 +160,17 @@ const Login = () => {
                                   
                                   <Link href='/register'>
                                     <a>Register </a>
+                                  </Link> </p>
+                </div>
+          </div>
+
+
+          <div className="row">
+                <div className="col">
+                      <p className="text-center">forgot password?  
+                                  
+                                  <Link href='/forgot-password'>
+                                    <a>Reset password </a>
                                   </Link> </p>
                 </div>
           </div>

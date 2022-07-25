@@ -1,5 +1,9 @@
 import { useState, createContext, useEffect } from "react";
 
+//import axios for log out thingy when jwt token expires
+import axios from 'axios'
+import {useRouter} from 'next/router'
+ 
 
 
 
@@ -34,6 +38,43 @@ const UserProvider = ({children}) => {
 
 
     //when user succesfully login user will update state in context
+
+
+    const router = useRouter()
+
+    //axios configeration for reducing the code check with jwt token
+
+      const token = state && state.token ? state.token : "";
+      axios.defaults.baseURL = process.env.NEXT_PUBLIC_API;
+      // whatever in env file will be set as default
+      //process.env.NEXT_PUBLIC_API : localhost:8000/api
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      //including bearer token in headers
+
+
+
+
+    axios.interceptors.response.use(
+        function(response) {
+            //Do something before req is sent
+            return response
+        },
+
+        function (error) {
+            // do something with req error
+
+            let res = error.response;
+            if(res.status === 401 && res.config && !res.config.__isRetryRequest) {
+                setState(null);
+                window.localStorage.removeItem('auth')
+                router.push('/login')
+            }
+            
+        }
+    ) 
+
+
+
 
 
     return (
