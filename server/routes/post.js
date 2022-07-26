@@ -7,9 +7,9 @@ const router = express.Router();
 
 
 //import controllers
-import {createPost ,uploadImage} from '../controllers/post'
+import {createPost ,uploadImage, postsByUser, userPost, updatePost, deletePost} from '../controllers/post'
 
-import {requireSignin} from '../middlewares'
+import {requireSignin, canEditDeletePost} from '../middlewares'
 
 
 
@@ -25,6 +25,22 @@ router.post('/image-upload', requireSignin,
                             uploadImage
                         );
       //upload image is function defined to create backend stuff such as receive data from front end and save in DB
+
+
+      //function to get posts by user to display in dashboard
+      router.get('/user-posts', requireSignin, postsByUser)
+      //postsByUser is defined in server/controllers/post.js
+
+
+      //routes to edit the available posts by user
+      router.get('/user-post/:_id', requireSignin,userPost )
+
+
+      //routess to update the content
+      router.put('/update-post/:_id', requireSignin,canEditDeletePost, updatePost)
+
+      //route to delete the post
+      router.delete('/delete-post/:_id', requireSignin,canEditDeletePost, deletePost)
 
 
 

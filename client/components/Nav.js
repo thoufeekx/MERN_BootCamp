@@ -46,7 +46,11 @@ const Nav = () => {
       style={{ backgroundColor: "blue" }}
     >
       <Link href="/">
-        <a className={`nav-link text-light logo ${current === '/' && 'active'}`}>Mern Camp</a>
+        <a
+          className={`nav-link text-light logo ${current === "/" && "active"}`}
+        >
+          Mern Camp
+        </a>
       </Link>
 
       {/* {state !== null ? 'got user' : 'state null'} 
@@ -55,40 +59,62 @@ const Nav = () => {
        // if there is value in state display logout
       */}
 
-      {state !== null ? 
-      (
+        
+      {state !== null ? (
         <>
-          <Link href="/user/dashboard/">
-            <a className={`nav-link text-light ${current === '/user/dashboard' && 'active'}`}>
-              {state && state.user && state.user.name}
-
-              {/* prototype route 
-              where user can post
-              push and delete content */}
-              
+        <div className="dropdown">
+          <a
+            className="btn dropdown-toggle text-light"
+            role="button"
+            id="dropdownMenuLink"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            {state && state.user && state.user.name}
+          </a>
+          <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li>
+              <Link href="/user/dashboard">
+                <a
+                  className={`nav-link dropdown-item ${
+                    current === "/user/dashboard" && "active"
+                  }`}
+                >
+                  Dashboard
+                </a>
+              </Link>
+            </li>
+            <li>
+              <a onClick={logout} className="nav-link">
+                Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </>
+      ) : (
+        <>
+          <Link href="/login">
+            <a
+              className={`nav-link text-light ${
+                current === "/login" && "active"
+              }`}
+            >
+              login
             </a>
           </Link>
 
-          <a onClick={logout} className="nav-link text-light">
-          logout
-        </a>
-        
-        </>
-      ) : 
-      
-      (
-        <>
-          <Link href="/login">
-            <a className={`nav-link text-light ${current === '/login' && 'active'}`}>login</a>
-          </Link>
-
           <Link href="/register">
-            <a className={`nav-link text-light ${current === '/register' && 'active'}`}>Register</a>
+            <a
+              className={`nav-link text-light ${
+                current === "/register" && "active"
+              }`}
+            >
+              Register
+            </a>
           </Link>
         </>
       )}
-
-
     </nav>
   );
 };

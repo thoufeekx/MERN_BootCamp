@@ -16,7 +16,7 @@ import jwt from 'jsonwebtoken'
 // jwt makes sure the authority of user
 //proctect certain routes
 //allow users to post, edit and stuff like that
-
+import {nanoid} from 'nanoid'
 
 
 
@@ -59,7 +59,7 @@ export const register = async (req,res) => {
     // create a new user****************************
 
     const user = new User({
-        name, email, password : hashedPassword, secret
+        name, email, password : hashedPassword, secret, username: nanoid(6),
         // name: name , since its correct we dont do it
         // email : email , correct so we dont do it
 

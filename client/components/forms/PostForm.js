@@ -1,8 +1,11 @@
 import dynamic from 'next/dynamic'
 import {Avatar} from 'antd'
-import {CameraOutlined} from '@ant-design/icons'
+
+import {CameraOutlined, LoadingOutlined } from '@ant-design/icons'
 
 import React from 'react'
+
+
 
 
 // const ReactQuill = dynamic( () => import('react-quill'), {ssr: false})
@@ -13,7 +16,7 @@ const ReactQuill = dynamic(() => import("react-quill"), {
 // import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
-const createPostForm = ({content, setContent, postSubmit, handleImage}) => {
+const PostForm = ({content, setContent, postSubmit, handleImage, uploading, image}) => {
   return (
     <div className='card'>
         <div className='card-body pb-7'>
@@ -41,7 +44,11 @@ const createPostForm = ({content, setContent, postSubmit, handleImage}) => {
 
 
                 <label>
-                  <CameraOutlined className='mt-2' />
+                  {
+                    image && image.url ? (
+                      <Avatar size={30} src={image.url} className='mt-2' />
+                    ) : uploading ? ( <LoadingOutlined className='mt-2' />) : ( <CameraOutlined className='mt-2' />)
+                  }
                   <input type='file' 
                          accept='images/*'
                          hidden
@@ -55,4 +62,4 @@ const createPostForm = ({content, setContent, postSubmit, handleImage}) => {
   )
 }
 
-export default createPostForm
+export default PostForm

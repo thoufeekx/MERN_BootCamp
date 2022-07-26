@@ -34,7 +34,14 @@ const userSchema = new Schema({
 
     secret:{
         type:  String,
-        trim: true,
+        lowercase: true,
+        require: true,
+    },
+
+
+    username:{
+        type:  String,
+        unique: true,
         require: true,
     },
 

@@ -4,12 +4,17 @@ import { toast } from "react-toastify";
 import {Modal} from 'antd'
 import Link from 'next/link'
 //import {SyncOutlined} from '@ant-design/icons'
-import Form from '../components/forms/authform'
+import Form from '../../../components/forms/authform'
 
-import {UserContext} from '../context'
+import {UserContext} from '../../../context' 
 import { useRouter } from "next/router";
 
-const Register = () => {
+
+
+
+
+
+const ProfileUpdate = () => {
   //state hooks
   const [name, setName] = useState("delta");
   const [email, setEmail] = useState("delta@gmail");
@@ -71,7 +76,7 @@ const Register = () => {
     <div className="container-fluid">
       <div className="row py-5 bg-secondary text-light bg-default-image">
         <div className="col text-center">
-          <h1>Register</h1>
+          <h1>ProfileUpdate</h1>
         </div>
       </div>
 
@@ -140,7 +145,7 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default ProfileUpdate;
 
 
 
