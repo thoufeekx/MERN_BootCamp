@@ -20,7 +20,7 @@ router.post('/create-post', requireSignin, createPost)
 //createPost is defined in '../controller/post'
 
 //creating a route for uploading-image
-router.post('/image-upload', requireSignin,
+router.post('/upload-image', requireSignin,
                             formidable({maxFileSize : 5 * 1024 * 1024}),
                             uploadImage
                         );

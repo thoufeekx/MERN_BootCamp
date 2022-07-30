@@ -250,3 +250,88 @@ export const forgotPassword = async (req,res) =>
 
 
 }
+
+export const profileUpdate = async (req,res) => {
+
+
+    try 
+    {
+        //console.log('profile up req.body', req.body);
+        const data = {}
+
+        if(req.body.username) {
+            data.username = req.body.username;
+             
+        }
+
+        if(req.body.about) {
+            data.about = req.body.about;
+             
+        }
+
+        if(req.body.name) {
+            data.name = req.body.name;
+             
+        }
+
+        if(req.body.password) {
+            if(req.body.password.length < 6) {
+                return res.json({error: 'password is required and min 6 characters'})
+            } else {
+                data.password = await hashPassword(req.body.password)
+            }
+             
+        }
+
+        if(req.body.secret) {
+            data.secret = req.body.secret;
+             
+        }
+
+        
+        if(req.body.image) {
+            data.image = req.body.image;
+             
+        }
+
+        let user = await User.findByIdAndUpdate(req.user._id, data, {new : true}) 
+        console.log('update user =>,', user);
+
+        user.password = undefined
+        user.secret = undefined
+
+        res.json({
+            user
+        })
+        
+    }
+     catch (err) 
+    {
+
+
+        //error 11000 is mongo db duplicate warning error
+        if(err.code == 11000) {
+            return res.json({ error: 'Duplicate username'})
+        }
+        console.log(err);
+    }
+}
+
+
+export const findPeople = async (req, res) => {
+
+    try 
+    {
+                const user = await User.findById(req.user._id);
+            //user following
+            let following = user.following;
+            following.push(user._id);
+
+            const people = await User.find( { _id: {$nin: following}}).limit(10);
+            res.json(people);
+    } 
+    catch (error) 
+    {
+        console.log(error);
+    }
+}

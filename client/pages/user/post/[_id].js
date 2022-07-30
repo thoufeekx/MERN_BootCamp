@@ -77,12 +77,13 @@ const EditPost = () => {
   
         //browser function
         formData.append('image', file);
+        setUploading(true)
         console.log([...formData]);
   
-        setUploading(true)
+        
         try 
         {
-            const {data} = await axios.post('/image-upload', formData)
+            const {data} = await axios.post('/upload-image', formData)
           //console.log('upload img =>', data);
   
             setImage({

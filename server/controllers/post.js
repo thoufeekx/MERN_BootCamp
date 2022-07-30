@@ -46,16 +46,17 @@ export const uploadImage = async (req, res) => {
 
      try 
      {
-          const result = await cloudinary.uploader.upload(req.files.image.path)
-     //this give url when upload is successful
+         const result = await cloudinary.uploader.upload(req.files.image.path)
+     // //this give url when upload is successful
 
-     //console.log('upload img url =>', result);
+      console.log('upload img url =>', result);
 
-     //send this to client as json
-     res.json({
-          url: result.secure_url,
-          public_id : result.public_id
-     })
+     // //send this to client as json
+      res.json({
+        url: result.secure_url,
+           public_id : result.public_id,
+           })
+     //console.log('req files', req.files);
      } 
      catch (error) 
      {

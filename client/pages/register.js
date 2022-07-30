@@ -4,17 +4,17 @@ import { toast } from "react-toastify";
 import {Modal} from 'antd'
 import Link from 'next/link'
 //import {SyncOutlined} from '@ant-design/icons'
-import Form from '../components/forms/authform'
+import AuthForm from '../components/forms/authform'
 
 import {UserContext} from '../context'
 import { useRouter } from "next/router";
 
 const Register = () => {
   //state hooks
-  const [name, setName] = useState("delta");
-  const [email, setEmail] = useState("delta@gmail");
-  const [password, setPassword] = useState("delta@123");
-  const [secret, setSecret] = useState("Black");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [secret, setSecret] = useState("");
   const [ok, setOk] = useState(false);
   const [loading, setLoading] = useState(false)
 
@@ -85,7 +85,7 @@ const Register = () => {
           {/* render from */}
 
 
-          <Form  
+          <AuthForm  
               handleSubmit={handleSubmit}
               name={name}
               setName={setName}

@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 //import controllers
-import {register, login, currentUser, forgotPassword} from '../controllers/auth'
+import {register, login, currentUser, forgotPassword, profileUpdate, findPeople} from '../controllers/auth'
 
 import {requireSignin} from '../middlewares'
 
@@ -35,6 +35,11 @@ router.post('/forgot-password',forgotPassword)
 //verify the secret secret entered durign registration
 //if pass. alowed to create a newpassword
 //forgotPassword is a function that do backend stuff of changing the old password and also deleting it
+
+router.put('/profile-update',requireSignin, profileUpdate)
+
+//function to find people to follow
+router.get('/find-people', requireSignin, findPeople)
 
 
 

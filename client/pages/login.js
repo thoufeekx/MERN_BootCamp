@@ -14,7 +14,7 @@ import { toast } from "react-toastify";
 import Link from 'next/link'
 
 // Input form containing email and password
-import Form from '../components/forms/authform'
+import AuthForm from '../components/forms/authform'
 
 // To route to homepage when the user credentials are verified
 import {useRouter} from 'next/router'
@@ -28,8 +28,8 @@ import { UserContext } from "../context";
 const Login = () => {
   //state hooks
   
-  const [email, setEmail] = useState("toxci@gmail");
-  const [password, setPassword] = useState("dhoigh");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
 
@@ -90,7 +90,7 @@ const Login = () => {
         //console.log(data); // logs token and other credentials
   
         //pushing the user to homepage or something
-        router.push('/')
+        router.push('/user/dashboard')
   
   
         //emptying once the data is entered, done for UI smoothing
@@ -133,7 +133,7 @@ const Login = () => {
           {/* render from */}
 
 
-          <Form  
+          <AuthForm  
               handleSubmit={handleSubmit}
               email={email}
               setEmail={setEmail}
